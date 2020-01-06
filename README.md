@@ -1,8 +1,8 @@
 # projectOne
-Title: Brew Me, Brew Around Austin, Brew Winch, Discover Breweries, Brews Around Me, 
+Title: Brew Me, Brew Winch, Discover Breweries, Brews Around Me, 
 
 ## description
-Create an application that presents users with breweries and bars that serve beer around their area. We will provide filter option by brewery name, state, city, and zip codes. Application then displays Brewery reviews, website url, address, phone number, hours of operation, small picture of brewery, and location on a map. 
+Create an application that presents users with breweries and bars that serve beer around their area. We will provide a default search of current location, and filter option by state, city, and zip code. Results are ordered by closest location and displayed by brewery name and location. After clicking result a modal displays Brewery reviews, website url, address, phone number, hours of operation, small picture of brewery, and location on a map. 
 
 ## user story
 Story #1
