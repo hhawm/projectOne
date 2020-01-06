@@ -1,11 +1,11 @@
 # projectOne
 
-description
+## description
 
-user story
+## user story
 
-wireframe
+## wireframe
 
-api keys to be used
+## api keys to be used
 
-rough breakdown of tasks
+## rough breakdown of tasks
