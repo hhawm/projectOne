@@ -17,7 +17,9 @@ So that I can try local beers
 
 ## api keys to be used
 https://leafletjs.com/
+
 https://www.openbrewerydb.org/
+
 https://www.yelp.com/developers/documentation/v3
 
 ## rough breakdown of tasks
