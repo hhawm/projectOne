@@ -36,3 +36,17 @@ https://www.openbrewerydb.org/
 https://www.yelp.com/developers/documentation/v3
 
 ## rough breakdown of tasks
+Create a landing page with a heading 1, 2 and form submission box with button for searching breweries
+
+Create a results div element that is hidden until it is populated with results
+
+Create  a modal that appears when a result is clicked. Modal has brewery information, reviews, and map location
+
+Set up an ajax GET to get information about breweries from OpenBreweryDB
+	Be able to display brewery url, address, and phone number.
+
+Set up an ajax GET to get review information and picture from Yelp fusion API
+	Be able to display a reviews of brewery, possibly image of brewery, and hours of operation
+
+Set up an ajax GET to show map location from leaflet API
+Make address from OpenBreweryDB link to leaflet to display brewery location on a map
