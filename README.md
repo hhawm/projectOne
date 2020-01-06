@@ -22,6 +22,11 @@ I want to find a local brewery
 So that I can try local beers
 
 ## wireframe
+![alt text](landing-page.png "Logo Title Text 1")
+
+![alt text](results.png "Logo Title Text 1")
+
+![alt text](modal.png "Logo Title Text 1")
 
 ## api keys to be used
 https://leafletjs.com/
