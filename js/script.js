@@ -95,7 +95,7 @@ function toMap(lat, lon) {
 var beerBtn = $("#beer-btn");
 
 function getBrewLocation(){
-    // var name = 
+    // var name =  
     var urlBrew = "https://api.openbrewerydb.org/breweries?by_name=" + name;
     $.ajax({
         url: urlBrew,
