@@ -1,51 +1,51 @@
-var searchBtn = $(".button");
+// var searchBtn = $(".button");
 
-searchBtn.on("click", function (event) {
-    event.preventDefault();
-    $("#results").empty();
-    var city = $(".input").val();
-    var urlBrew = "https://api.openbrewerydb.org/breweries?by_city=" + city;
+// searchBtn.on("click", function (event) {
+//     event.preventDefault();
+//     $("#results").empty();
+//     var city = $(".input").val();
+//     var urlBrew = "https://api.openbrewerydb.org/breweries?by_city=" + city;
 
-    $.ajax({
-        url: urlBrew,
-        method: "GET"
-    }).then(function (responseBrew) {
-        console.log(responseBrew);
-        for (var i = 0; i < responseBrew.length; i++) {
-            var breweryName = responseBrew[i].name;
-            var results = $("<h2>").append(breweryName)
-            $("#results").append(results);
-        }
-    });
-});
+//     $.ajax({
+//         url: urlBrew,
+//         method: "GET"
+//     }).then(function (responseBrew) {
+//         console.log(responseBrew);
+//         for (var i = 0; i < responseBrew.length; i++) {
+//             var breweryName = responseBrew[i].name;
+//             var results = $("<h2>").append(breweryName)
+//             $("#results").append(results);
+//         }
+//     });
+// });
 
-var searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-pinthouse&location=austin";
+// var searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-pinthouse&location=austin";
 
-$.ajax({
-    url: searchURL,
-    headers: {
-        'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
-    },
-    method: 'GET',
-    dataType: 'json',
-    success: function (data) {
-        console.log(JSON.stringify(data));
-    }
-});
+// $.ajax({
+//     url: searchURL,
+//     headers: {
+//         'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
+//     },
+//     method: 'GET',
+//     dataType: 'json',
+//     success: function (data) {
+//         console.log(JSON.stringify(data));
+//     }
+// });
 
-var reviewsURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/j3CWjH0XtesbbDZFVq3c7Q/reviews"
+// var reviewsURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/j3CWjH0XtesbbDZFVq3c7Q/reviews"
 
-$.ajax({
-    url: reviewsURL,
-    headers: {
-        'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
-    },
-    method: 'GET',
-    dataType: 'json',
-    success: function (data) {
-        console.log(JSON.stringify(data.reviews));
-    }
-});
+// $.ajax({
+//     url: reviewsURL,
+//     headers: {
+//         'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
+//     },
+//     method: 'GET',
+//     dataType: 'json',
+//     success: function (data) {
+//         console.log(JSON.stringify(data.reviews));
+//     }
+// });
 
 // --------------------------------------------------------------------------------------------------------playing with geolocation and leaflet------------------------------------------------------------------------------
 
@@ -85,8 +85,44 @@ function toMap(lat, lon) {
     marker.bindPopup("<b>Hello World I am right here</b><br>Check out the breweries around me.").openPopup();
 }
 
+// var beerBtn = $("#beer-btn");
+
+// beerBtn.on("click", function () {
+//     getLocation();
+// });
+
+//-------------------------------------------------------------------------------------------------generating brewery longitude and latitude----------------------------------------------------------------------------
 var beerBtn = $("#beer-btn");
 
-beerBtn.on("click", function () {
-    getLocation();
-});
+function getBrewLocation(){
+    // var name = 
+    var urlBrew = "https://api.openbrewerydb.org/breweries?by_name=" + name;
+    $.ajax({
+        url: urlBrew,
+        method: "GET"
+    }).then(function (responseBrew) {
+        console.log(responseBrew);
+        var brewLon = responseBrew.longitude;
+        var brewLat = responseBrew.latitude;
+        console.log(brewLon, brewLat);
+        
+        toMap(brewLat, brewLon);
+    });
+}
+
+function toMap(brewLat, brewLon) {
+    var mymap = L.map('mapid').setView([brewLat, brewLon], 13);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVvbG9wZXoxMCIsImEiOiJjazUzNnRncWswNWlvM2pxdDEwaXVjM3ZiIn0.RfzW0gewoJwX4Dyj518tMg', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        accessToken: 'your.mapbox.access.token'
+        // Marker for the map
+    }).addTo(mymap);
+    var marker = L.marker([brewLat, brewLon]).addTo(mymap);
+    marker.bindPopup("<b>Hello World I am right here</b><br>Check out this brewery").openPopup();
+}
+beerBtn.on("click", function(){
+    getBrewLocation();
+
+})
