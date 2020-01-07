@@ -1,72 +1,92 @@
-// var urlBrew = "https://api.openbrewerydb.org/breweries?by_city=austin";
-
-// $.ajax({
-//     url: urlBrew,
-//     method: "GET"
-// }).then(function (responseBrew) {
-//     console.log(responseBrew);
-// });
-
-// var myurl = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-pinthouse&location=austin";
-
-// $.ajax({
-//     url: myurl,
-//     headers: {
-//         'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
-//     },
-//     method: 'GET',
-//     dataType: 'json',
-//     success: function (data) {
-//         console.log('success: ' + JSON.stringify(data));
-//     }
-// });
-
-
-
-var searchBtn = $("#searchBtn");
+var searchBtn = $(".button");
 
 searchBtn.on("click", function (event) {
     event.preventDefault();
-    // clears previous results before displaying new results
-    // $("#results").empty();
-    // console.log(clear);
+    $("#results").empty();
+    var city = $(".input").val();
+    var urlBrew = "https://api.openbrewerydb.org/breweries?by_city=" + city;
 
-    // var searchInputEl = $("#searchInput").val();
-    var searchLocationEl = $("searchLocation").val();
-
-    // if (searchInputEl === "") {
-    //     searchInputEl = "";
-    // };
-
-    if (searchLocationEl === "") {
-        searchLocationEl = document.getElementById("results");
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-        };
-
-        function showPosition(position) {
-            x.innerHTML = "Latitude: " + position.coords.latitude +
-                "<br>Longitude: " + position.coords.longitude;
-        };
-    };
+    $.ajax({
+        url: urlBrew,
+        method: "GET"
+    }).then(function (responseBrew) {
+        console.log(responseBrew);
+        for (var i = 0; i < responseBrew.length; i++) {
+            var breweryName = responseBrew[i].name;
+            var results = $("<h2>").append(breweryName)
+            $("#results").append(results);
+        }
+    });
 });
 
+var searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-pinthouse&location=austin";
 
-navigator.geolocation.getCurrentPosition(function (location) {
-    var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+$.ajax({
+    url: searchURL,
+    headers: {
+        'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
+    },
+    method: 'GET',
+    dataType: 'json',
+    success: function (data) {
+        console.log(JSON.stringify(data));
+    }
+});
 
-    var mymap = L.map('mapid').setView(latlng, 13)
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://mapbox.com">Mapbox</a>',
+var reviewsURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/j3CWjH0XtesbbDZFVq3c7Q/reviews"
+
+$.ajax({
+    url: reviewsURL,
+    headers: {
+        'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
+    },
+    method: 'GET',
+    dataType: 'json',
+    success: function (data) {
+        console.log(JSON.stringify(data.reviews));
+    }
+});
+
+// --------------------------------------------------------------------------------------------------------playing with geolocation and leaflet------------------------------------------------------------------------------
+
+//How to gain location based on web browsers geolocation
+function getLocation() {
+    // Make sure browser supports this feature
+    if (navigator.geolocation) {
+        // Provide our showPosition() function to getCurrentPosition
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+    else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+// This will get called after getCurrentPosition()
+function showPosition(position) {
+    // Grab coordinates from the given object
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+    console.log("Your coordinates are Latitude: " + lat + " Longitude " + lon);
+
+    // call next function to assign parameters in map api
+    toMap(lat, lon);
+}
+
+function toMap(lat, lon) {
+    var mymap = L.map('mapid').setView([lat, lon], 13);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVvbG9wZXoxMCIsImEiOiJjazUzNnRncWswNWlvM2pxdDEwaXVjM3ZiIn0.RfzW0gewoJwX4Dyj518tMg', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
-        id: 'mapbox.streets',
-        accessToken: 'pk.eyJ1IjoiYmJyb29rMTU0IiwiYSI6ImNpcXN3dnJrdDAwMGNmd250bjhvZXpnbWsifQ.Nf9Zkfchos577IanoKMoYQ'
+        id: 'mapbox/streets-v11',
+        accessToken: 'your.mapbox.access.token'
+        // Marker for the map
     }).addTo(mymap);
+    var marker = L.marker([lat, lon]).addTo(mymap);
+    marker.bindPopup("<b>Hello World I am right here</b><br>Check out the breweries around me.").openPopup();
+}
 
-    var marker = L.marker(latlng).addTo(mymap);
+var beerBtn = $("#beer-btn");
+
+beerBtn.on("click", function () {
+    getLocation();
 });
