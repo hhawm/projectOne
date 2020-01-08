@@ -170,7 +170,7 @@ searchBtn.on("click", function (event) {
             //click function to close modal clear the map that was opened
             modalBackground.on("click", function (event) {
                 event.preventDefault();
-                mymap.off();
+                // mymap.off();
                 // mymap.remove();
                 closeModal();
             });
@@ -178,7 +178,7 @@ searchBtn.on("click", function (event) {
             //click function to close modal clear the map that was opened
             modalCloseBtn.on("click", function (event) {
                 event.preventDefault();
-                mymap.off();
+                // mymap.off();
                 closeModal();
             });
 
@@ -189,8 +189,11 @@ searchBtn.on("click", function (event) {
             modalBtn.on("click", function (event) {
                 event.preventDefault();
                 console.log(brewLat, brewLon);
-                activateModal();
-                toMap(brewLat, brewLon);
+                //if statement that does not allow the modal to open if cooridnates are null
+                if ((brewLon !== null) && (brewLat !== null)) {
+                    activateModal();
+                    toMap(brewLat, brewLon);
+                }
             })
         }
     });
