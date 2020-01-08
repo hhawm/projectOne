@@ -5,58 +5,77 @@ searchBtn.on("click", function (event) {
     $("#results").empty();
     var city = $("#city").val();
     var state = $("#state").val();
-    var urlBrew = "https://api.openbrewerydb.org/breweries?by_city=" + city + "&by_state=" + state;
+    var brewURL = "https://api.openbrewerydb.org/breweries?by_city=" + city + "&by_state=" + state;
 
     $.ajax({
-        url: urlBrew,
+        url: brewURL,
         method: "GET"
     }).then(function (responseBrew) {
         console.log(responseBrew);
         for (var i = 0; i < responseBrew.length; i++) {
             var brewName = responseBrew[i].name;
+            var brewWeb = responseBrew[i].website_url;
             var brewPhone = responseBrew[i].phone;
+
             var brewResults = $("#results");
+            var column = $("<div>").addClass("column is-one-quarter");
+            var card = $("<div>").addClass("card");
+            var cardImage = $("<div>").addClass("card-image");
+            var brewImage = $("<figure>").addClass("image is-4by3");
+            var imageSrc = $("<img>");
+            imageSrc.attr("src", "https://bulma.io/images/placeholders/1280x960.png");
+            var cardContent = $("<div>").addClass("card-content");
+            var media = $("<div>").addClass("media");
+            var mediaContent = $("<div>").addClass("media-content");
+            var title = $("<P>").addClass("title is-4");
+            title.text(brewName);
+            var subTitle = $("<p>").addClass("subtitle is-6");
+            subTitle.text(brewWeb);
+            var subTitle2 = $("<p>").addClass("subtitle is-6");
+            subTitle2.text(brewPhone);
 
-            var columns = $("<div>");
-            columns.addClass("columns");
-            columns.append(brewResults);
-            var column = $("<div>");
-            column.addClass("column");
-            column.append(columns);
+            mediaContent.append(title);
+            mediaContent.append(subTitle);
+            mediaContent.append(subTitle2);
+            media.append(mediaContent);
+            cardContent.append(media);
+            brewImage.append(imageSrc);
+            cardImage.append(brewImage);
+            card.append(cardImage);
+            card.append(cardContent);
+            column.append(card);
+            brewResults.append(column);
 
-            // var results = $("<h2>").append(brewName)
-            // $("#results").append(results);
+            var searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-" + brewName;
+
+            $.ajax({
+                url: searchURL,
+                headers: {
+                    'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
+                },
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                }
+            });
         }
     });
+
+    // var reviewsURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/j3CWjH0XtesbbDZFVq3c7Q/reviews"
+
+    // $.ajax({
+    //     url: reviewsURL,
+    //     headers: {
+    //         'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
+    //     },
+    //     method: 'GET',
+    //     dataType: 'json',
+    //     success: function (data) {
+    //         console.log(JSON.stringify(data.reviews));
+    //     }
+    // });
 });
-
-// var searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-pinthouse&location=austin";
-
-// $.ajax({
-//     url: searchURL,
-//     headers: {
-//         'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
-//     },
-//     method: 'GET',
-//     dataType: 'json',
-//     success: function (data) {
-//         console.log(JSON.stringify(data));
-//     }
-// });
-
-// var reviewsURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/j3CWjH0XtesbbDZFVq3c7Q/reviews"
-
-// $.ajax({
-//     url: reviewsURL,
-//     headers: {
-//         'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
-//     },
-//     method: 'GET',
-//     dataType: 'json',
-//     success: function (data) {
-//         console.log(JSON.stringify(data.reviews));
-//     }
-// });
 
 // --------------------------------------------------------------------------------------------------------playing with geolocation and leaflet------------------------------------------------------------------------------
 

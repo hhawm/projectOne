@@ -2,3 +2,8 @@
     color: black;
     text-align: center;
   }
+
+#results-section {
+  margin-left: 150px;
+  margin-right: 150px;
+}
