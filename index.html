@@ -38,17 +38,18 @@
             <div class="field">
                 <label class="label">Location</label>
                 <div class="control">
-                    <input class="input is-danger" type="text" id="searchLocation"
-                        placeholder="current location by default">
+                    <input id="city" class="input is-danger" type="text" id="searchLocation" placeholder="City">
+                    <input id="state" class="input is-danger" type="text" id="searchLocation" placeholder="State">
                 </div>
             </div>
-            <button class="button is-black"><i class="fas fa-search" style="padding-right: 1rem"></i> Search</button>
+            <!-- added id to search button -->
+            <button id="search-btn" class="button is-black"><i class="fas fa-search" style="padding-right: 1rem"></i> Search</button>
             <button id="beer-btn" class="button is-black"><i class="fas fa-search" style="padding-right: 1rem"></i>
                 Beer</button>
         </div>
     </section>
 
-    <div id="mapid" style="height: 300px;"></div>
+    
 
     <section class="section">
         <div class="container">
@@ -61,15 +62,28 @@
         </div>
     </section>
 
+    <section class="section">
+        <div class="modal">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+              <!-- Any other Bulma elements you want -->
+              <div id="mapid" style="height: 300px;"></div>
+            </div>
+            <button class="modal-close is-large" aria-label="close"></button>
+          </div>
+          
+    </section>
+
 
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://d3js.org/topojson.v0.min.js"></script>
     <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
     <script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
 
-    <div id="mapid"></div>
-
-
+    
+    
+    
+    
     <section class="hero is-warning">
         <div class="content has-text-centered is-warning hero-body">
             <p>
@@ -77,8 +91,10 @@
             </p>
         </div>
     </section>
+    
+    
 
-
+        
 
 
 
