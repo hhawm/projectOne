@@ -16,6 +16,8 @@ searchBtn.on("click", function (event) {
             var brewName = responseBrew[i].name;
             var brewWeb = responseBrew[i].website_url;
             var brewPhone = responseBrew[i].phone;
+            var brewLat = responseBrew[i].latitude;
+            var brewLon = responseBrew[i].longitude;
 
             var brewResults = $("#results");
             var column = $("<div>").addClass("column is-one-quarter");
@@ -46,7 +48,9 @@ searchBtn.on("click", function (event) {
             column.append(card);
             brewResults.append(column);
 
-            var searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-" + brewName;
+            console.log(brewName);
+
+            var searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=" + brewLat + "&longitude=" + brewLon;
 
             $.ajax({
                 url: searchURL,
