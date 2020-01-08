@@ -77,6 +77,7 @@
 
 //create a variable for our map
 var mymap = L.map('mapid')
+
 //create a function to place cooridnates into map
 function toMap(brewLat, brewLon) {
     mymap.setView([brewLat, brewLon], 13);
@@ -124,10 +125,10 @@ searchBtn.on("click", function (event) {
         // console.log(responseBrew);
         for (var i = 0; i < responseBrew.length; i++) {
             //leo adding id, longitude, and latitude
-            var brewId = responseBrew[i].id
-            var brewLon = responseBrew[i].longitude;
-            var brewLat = responseBrew[i].latitude;
-            console.log(brewLon, brewLat);
+            var brewId = responseBrew[i].id;
+            let brewLon = responseBrew[i].longitude;
+            let brewLat = responseBrew[i].latitude;
+            // console.log(brewLon, brewLat);
             //andy's dynamic elements
             var brewName = responseBrew[i].name;
             var brewPhone = responseBrew[i].phone;
@@ -162,6 +163,8 @@ searchBtn.on("click", function (event) {
             column.append(card);
             columns.append(column);
             brewResults.append(columns);
+
+            console.log(brewLat, brewLon);
 
 
             //click function to close modal clear the map that was opened
