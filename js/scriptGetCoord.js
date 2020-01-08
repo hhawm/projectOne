@@ -23,16 +23,21 @@ function showPosition(position) {
     console.log(lon);
 }
 function toMap(lat, lon) {
-    var mymap = L.map('mapid').setView([lat, lon], 13);
+    var mymap = L.map('mapid').setView([lat, lon], 11);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVvbG9wZXoxMCIsImEiOiJjazUzNnRncWswNWlvM2pxdDEwaXVjM3ZiIn0.RfzW0gewoJwX4Dyj518tMg', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
+        maxZoom: 15,
         id: 'mapbox/streets-v11',
         accessToken: 'your.mapbox.access.token'
         // Marker for the map
     }).addTo(mymap);
     var marker = L.marker([lat, lon]).addTo(mymap);
     marker.bindPopup("<b>Hello World I am right here</b><br>Check out the breweries around me.").openPopup();
+
+    // for (var i = 0; i < numRecords; i++) {
+    //     var BarMarker[i] = L.marker([lat, lon]).addTo(mymap);
+    //     BarMarker[i].bindPopup("BAR HERE").openPopup();
+    // };
 }
 
 

@@ -3,8 +3,8 @@ var searchBtn = $(".button");
 searchBtn.on("click", function (event) {
     event.preventDefault();
     $("#results").empty();
-    var city = $(".input").val();
-    var urlBrew = "https://api.openbrewerydb.org/breweries?by_city=" + city;
+    var searchCity = $(".input").val();
+    var urlBrew = "https://api.openbrewerydb.org/breweries?by_city=" + searchCity;
 
     $.ajax({
         url: urlBrew,
