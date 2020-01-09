@@ -1,4 +1,4 @@
-let searchBtn = $("#search-button");
+let searchBtn = $("#search-btn");
 let infoModal = $("#info-modal");
 
 let states = {
@@ -57,7 +57,7 @@ let states = {
 
 
 //create a variable for our map
-var mymap = L.map('mapid')
+let mymap = L.map('mapid')
 
 //create a function to place cooridnates into map
 function toMap(brewLat, brewLon) {
@@ -73,12 +73,12 @@ function toMap(brewLat, brewLon) {
 };
 
 
-//create a function that pulls cooridnates for a specific brewery each time the map button is clicked in the results
+// //create a function that pulls cooridnates for a specific brewery each time the map button is clicked in the results
 
 
 //variables for the closing the modal by clicking background and the X close button
-var modalBackground = $(".modal-background");
-var modalCloseBtn = $(".modal-close");
+let modalBackground = $(".modal-background");
+let modalCloseBtn = $(".delete");
 
 //create a function to activate modal
 function activateModal() {
@@ -91,7 +91,6 @@ function closeModal() {
 
 
 //---------------------------------------------------------------------------------------Andy's code for creating cards mixed with my map modal--------------------------------------------------------------------------------------------------------------------------
-var searchBtn = $("#search-btn");
 searchBtn.on("click", function (event) {
     event.preventDefault();
     $("#results").empty();
@@ -134,6 +133,12 @@ searchBtn.on("click", function (event) {
                 let infoBtn = $("<button>").addClass("info-button");
                 infoBtn.text("INFO");
 
+                // //create a modal map button
+                // let modalBtn = $("<button>").addClass("button is-black");
+                // modalBtn.text("Map");
+                // mediaContent.append(title);
+                // mediaContent.append(subTitle);
+
                 mediaContent.append(title);
                 mediaContent.append(subTitle);
                 mediaContent.append(subTitle2);
@@ -144,98 +149,100 @@ searchBtn.on("click", function (event) {
                 column.append(card);
                 brewResults.append(column);
 
-                infoBtn.on("click", function (event) {
-                    event.preventDefault();
+                    //Modal map button creating
+                    //click function to close modal clear the map that was opened
+                    modalBackground.on("click", function (event) {
+                        event.preventDefault();
+                        // mymap.off();
+                        // mymap.remove();
+                        closeModal();
+                    });
 
-                    let searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/matches?name=" + brewName + "&address1=" + brewAddress + "&city=" + brewCity + "&state=" + states[brewState] + "&country=US";
+                    //click function to close modal clear the map that was opened
+                    modalCloseBtn.on("click", function (event) {
+                        event.preventDefault();
+                        // mymap.off();
+                        closeModal();
+                    });
 
-                    $.ajax({
-                        url: searchURL,
-                        headers: {
-                            'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
-                        },
-                        method: 'GET',
-                        dataType: 'json',
-                    }).then(function (data) {
-                        console.log(data);
-                        console.log(data.businesses[0].id)
 
-                        let brewID = data.businesses[0].id;
+                    //created a function to open up a modal with a map in it
+                    //running into two errors: need to learn how to clear the map before reloading when clicking another modalBtn and still only pooling one set of longitude and latitude coordinates
+                    //possible need to create a function to pull cooridnates of specific location each time
+                    infoBtn.on("click", function (event) {
+                        event.preventDefault();
+                        console.log(brewLat, brewLon);
+                        //if statement that does not allow the modal to open if cooridnates are null
+                        if ((brewLon !== null) && (brewLat !== null)) {
+                            activateModal();
+                            toMap(brewLat, brewLon);
+                            let marker = L.marker([brewLat, brewLon]).addTo(mymap);
+                            marker.bindPopup(brewName + "<br>" + brewAddress + "<br>" + brewCity + "," + brewState).openPopup();
 
-                        let idURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/" + brewID;
-
-                        $.ajax({
-                            url: idURL,
-                            headers: {
-                                'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
-                            },
-                            method: 'GET',
-                            dataType: 'json',
-                        }).then(function (data) {
-                            console.log(data);
-
-                            infoModal.addClass("is-active");
-
-                            let infoName = $("<p>");
-                            infoName.text(brewName);
-                            let infoImage = $("<div>");
-                            let infoSrc = $("<img>");
-                            infoSrc.attr("src", data.image_url);
-                            let infoRating = $("<p>");
-                            infoRating.text(data.rating);
-                            let infoReviewCount = $("<p>");
-                            infoReviewCount.text(data.review_count);
-
-                            let cardBody = $(".modal-card-body");
-
-                            cardBody.append(infoName);
-                            cardBody.append(infoImage);
-                            infoImage.append(infoSrc);
-                            cardBody.append(infoImage);
-                            cardBody.append(infoRating);
-                            cardBody.append(infoReviewCount);
-                        })
+                        }
                     })
-                });
+
+                // infoBtn.on("click", function (event) {
+                //     event.preventDefault();
+                //     $(".modal-card-body").empty();
+
+                //     let searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/matches?name=" + brewName + "&address1=" + brewAddress + "&city=" + brewCity + "&state=" + states[brewState] + "&country=US";
+
+                //     $.ajax({
+                //         url: searchURL,
+                //         headers: {
+                //             'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
+                //         },
+                //         method: 'GET',
+                //         dataType: 'json',
+                //     }).then(function (data) {
+                //         console.log(data);
+                //         console.log(data.businesses[0].id)
+
+                //         let brewID = data.businesses[0].id;
+
+                //         let idURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/" + brewID;
+
+                //         $.ajax({
+                //             url: idURL,
+                //             headers: {
+                //                 'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
+                //             },
+                //             method: 'GET',
+                //             dataType: 'json',
+                //         }).then(function (data) {
+                //             console.log(data);
+
+                //             infoModal.addClass("is-active");
+
+                //             let infoName = $("<p>");
+                //             infoName.text(brewName);
+                //             let infoImage = $("<div>");
+                //             let infoSrc = $("<img>");
+                //             infoSrc.attr("src", data.image_url);
+                //             let infoRating = $("<p>");
+                //             infoRating.text(data.rating);
+                //             let infoReviewCount = $("<p>");
+                //             infoReviewCount.text(data.review_count);
+
+                //             let cardBody = $(".modal-card-body");
+
+                //             cardBody.append(infoName);
+                //             cardBody.append(infoImage);
+                //             infoImage.append(infoSrc);
+                //             cardBody.append(infoImage);
+                //             cardBody.append(infoRating);
+                //             cardBody.append(infoReviewCount);
+                //         })
+                //     })
+                // });
             }
         }
     });
 });
 
 
-            //click function to close modal clear the map that was opened
-            modalBackground.on("click", function (event) {
-                event.preventDefault();
-                // mymap.off();
-                // mymap.remove();
-                closeModal();
-            });
-
-            //click function to close modal clear the map that was opened
-            modalCloseBtn.on("click", function (event) {
-                event.preventDefault();
-                // mymap.off();
-                closeModal();
-            });
 
 
-            //created a function to open up a modal with a map in it
-            //running into two errors: need to learn how to clear the map before reloading when clicking another modalBtn and still only pooling one set of longitude and latitude coordinates
-            //possible need to create a function to pull cooridnates of specific location each time
-            modalBtn.on("click", function (event) {
-                event.preventDefault();
-                console.log(brewLat, brewLon);
-                //if statement that does not allow the modal to open if cooridnates are null
-                if ((brewLon !== null) && (brewLat !== null)) {
-                    activateModal();
-                    toMap(brewLat, brewLon);
-                    var marker = L.marker([brewLat, brewLon]).addTo(mymap);
-                    marker.bindPopup(brewName + "<br>" + brewStreet + "<br>" + brewCity + "," + brewState + "<br>" + brewZip).openPopup();
-                   
-                }
-            })
-        }
-    });
-});
 
 
