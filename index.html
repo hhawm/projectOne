@@ -38,29 +38,32 @@
             <div class="field">
                 <label class="label">Location</label>
                 <div class="control">
-                    <input class="input is-danger" type="text" id="searchLocation"
-                        placeholder="current location by default">
+                    <input id="city" class="input is-danger" type="text" id="searchLocation" placeholder="City">
+                    <input id="state" class="input is-danger" type="text" id="searchLocation" placeholder="State">
                 </div>
             </div>
-            <button class="button is-black"><i class="fas fa-search" style="padding-right: 1rem"></i> Search</button>
+            <button id="search-button" class="button is-black"><i class="fas fa-search" style="padding-right: 1rem"></i>
+                Search</button>
             <button id="beer-btn" class="button is-black"><i class="fas fa-search" style="padding-right: 1rem"></i>
                 Beer</button>
         </div>
     </section>
 
-    <div id="mapid" style="height: 300px;"></div>
-
-    <section class="section">
-        <div class="container">
-            <h2 class="subtitle">
-                Results (with clickable map)
-            </h2>
-            <div class="card-body" id="results">
-
-            </div>
+    <!-- Results -->
+    <div id="info-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Modal title</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <!-- Content ... -->
+            </section>
+            <footer class="modal-card-foot">
+            </footer>
         </div>
-    </section>
-
+    </div>
 
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://d3js.org/topojson.v0.min.js"></script>
@@ -69,21 +72,8 @@
 
     <div id="mapid"></div>
 
-
-    <section class="hero is-warning">
-        <div class="content has-text-centered is-warning hero-body">
-            <p>
-                <strong>Please drink responsibly.</strong>
-            </p>
-        </div>
-    </section>
-
-
-
-
-
-
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="js/script.js"></script>
 </body>
