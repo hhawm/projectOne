@@ -95,10 +95,15 @@ searchBtn.on("click", function (event) {
     event.preventDefault();
     $("#results").empty();
 
+//     var searchCity = $(".input").val();
+//     var urlBrew = "https://api.openbrewerydb.org/breweries?by_city=" + searchCity;
+
+
 
     let city = $("#city").val();
     let state = $("#state").val();
     let brewURL = "https://api.openbrewerydb.org/breweries?by_city=" + city + "&by_state=" + state;
+
 
 
     $.ajax({
