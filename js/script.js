@@ -114,11 +114,6 @@ searchBtn.on("click", function (event) {
                 infoBtn.on("click", function (event) {
                     event.preventDefault();
 
-                    infoModal.addClass("is-active");
-
-                    let infoName = $("<p>");
-                    infoName.text = brewName;
-
                     let searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/matches?name=" + brewName + "&address1=" + brewAddress + "&city=" + brewCity + "&state=" + states[brewState] + "&country=US";
 
                     $.ajax({
@@ -145,6 +140,27 @@ searchBtn.on("click", function (event) {
                             dataType: 'json',
                         }).then(function (data) {
                             console.log(data);
+
+                            infoModal.addClass("is-active");
+
+                            let infoName = $("<p>");
+                            infoName.text(brewName);
+                            let infoImage = $("<div>");
+                            let infoSrc = $("<img>");
+                            infoSrc.attr("src", data.image_url);
+                            let infoRating = $("<p>");
+                            infoRating.text(data.rating);
+                            let infoReviewCount = $("<p>");
+                            infoReviewCount.text(data.review_count);
+
+                            let cardBody = $(".modal-card-body");
+
+                            cardBody.append(infoName);
+                            cardBody.append(infoImage);
+                            infoImage.append(infoSrc);
+                            cardBody.append(infoImage);
+                            cardBody.append(infoRating);
+                            cardBody.append(infoReviewCount);
                         })
                     })
                 });
