@@ -24,6 +24,7 @@
     <title>Brew Near You VERSION1.1</title>
 </head>
 
+
 <body>
     <section class="hero is-warning">
         <div class="hero-body">
@@ -41,6 +42,7 @@
         <div class="container is-fluid">
             <div class="field">
                 <label class="label">Location</label>
+
                 <p class="control has-icons-left">
                     <input class="input is-danger" type="text" id="searchCity"
                         placeholder="current location by default">
@@ -112,30 +114,55 @@
             <button class="button is-black"><i class="fas fa-search" style="padding-right: 1rem"></i>
                 Search</button>
             <button id="beer-btn" class="button is-black"><i class="fas fa-beer" style="padding-right: 1rem"></i>
-                Beer</button>
+
         </div>
     </section>
+
+  
+
 
     <section class="section">
-        <div class="container">
-            <h2 class="subtitle">
-                Results (with clickable map)
-            </h2>
-
-            <div id="mapid" style="height: 900px; width: 50%;"></div>
-
-            <div class="card-body" id="results">
-
+        <div class="modal">
+            <div class="modal-background"></div>
+            <div class="modal-content"> -->
+                Any other Bulma elements you want
+                <div id="mapid" style="height: 300px;"></div>
             </div>
+            <button class="modal-close is-large" aria-label="close"></button>
         </div>
+
     </section>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <!-- Results -->
+    <section id="results-section" class="section">
+        <div id="results" class="columns is-multiline">
+        </div>
+    </section>
+<!--     
+    <div id="info-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Modal title</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                Content ...
+            </section>
+            <footer class="modal-card-foot">
+            </footer>
+        </div>
+    </div> -->
+
+
+
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://d3js.org/topojson.v0.min.js"></script>
     <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
     <script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
+
+
 
 
 
@@ -151,13 +178,7 @@
 
 
 
-
-
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
-    <!-- toggle btwn the two JS -->
-    <!-- <script src="js/scriptGetCoord.js"></script> -->
+ 
     <script src="js/scriptGetCoord.js"></script>
 
 </body>
