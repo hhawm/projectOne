@@ -1,4 +1,4 @@
-
+//replaced script.js
 
 function getLocation() {
     // Make sure browser supports this feature
