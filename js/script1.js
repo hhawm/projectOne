@@ -1,6 +1,37 @@
 let searchBtn = $("#search-btn");
 let infoModal = $("#info-modal");
 
+
+// function useMapquest() {
+//     // I cannot figure out why these cityEl and stateEl have to be defined again.
+//     let city = $("#city").val();
+//     let state = $("#state").val();
+
+//     // mapquest api key
+//     let mqKey = "cRaBdQ9RUn3PkgcRWcT4gdj6CxzDt1rW";
+//     let queryURL = "http://www.mapquestapi.com/geocoding/v1/address?key=" + mqKey + "&location=" + cityEl + "," + stateEl;
+
+//     console.log(mqKey);
+//     console.log(cityEl);
+//     console.log(stateEl);
+
+//     $.ajax({
+//         url: queryURL,
+//         method: "GET"
+//     }).then(function (response) {
+//         // for (var i = 0; i < numRecords; i++) {
+//         console.log(response);
+//         let lat = response.results[0].locations[0].latLng.lat;
+//         console.log(lat);
+//         let lon = response.results[0].locations[0].latLng.lng;
+//         console.log(lon);
+
+//         toMap(lat, lon);
+
+//     });
+// }
+
+
 let states = {
     'Alabama': 'AL',
     'Alaska': 'AK',
@@ -61,6 +92,8 @@ let mymap = L.map('mapid')
 
 //create a function to place cooridnates into map
 function toMap(brewLat, brewLon) {
+    let mymap = L.map('mapid').setView([lat, lon], 11);
+
     mymap.setView([brewLat, brewLon], 13);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVvbG9wZXoxMCIsImEiOiJjazUzNnRncWswNWlvM2pxdDEwaXVjM3ZiIn0.RfzW0gewoJwX4Dyj518tMg', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -137,6 +170,7 @@ searchBtn.on("click", function (event) {
                 subTitle2.text(brewPhone);
                 let infoBtn = $("<button>").addClass("info-button");
                 infoBtn.text("INFO");
+                toMap(brewLat, brewLon);
 
 
                 // //create a modal map button
