@@ -56,7 +56,7 @@ let states = {
 }
 
 
-//create a variable for our map
+//create a variable for our map (cool)
 let mymap = L.map('mapid')
 
 //create a function to place cooridnates into map
