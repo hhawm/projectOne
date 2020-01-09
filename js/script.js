@@ -95,8 +95,8 @@ searchBtn.on("click", function (event) {
     event.preventDefault();
     $("#results").empty();
 
-//     var searchCity = $(".input").val();
-//     var urlBrew = "https://api.openbrewerydb.org/breweries?by_city=" + searchCity;
+    //     var searchCity = $(".input").val();
+    //     var urlBrew = "https://api.openbrewerydb.org/breweries?by_city=" + searchCity;
 
 
 
@@ -154,38 +154,38 @@ searchBtn.on("click", function (event) {
                 column.append(card);
                 brewResults.append(column);
 
-                    //Modal map button creating
-                    //click function to close modal clear the map that was opened
-                    modalBackground.on("click", function (event) {
-                        event.preventDefault();
-                        // mymap.off();
-                        // mymap.remove();
-                        closeModal();
-                    });
+                //Modal map button creating
+                //click function to close modal clear the map that was opened
+                modalBackground.on("click", function (event) {
+                    event.preventDefault();
+                    // mymap.off();
+                    // mymap.remove();
+                    closeModal();
+                });
 
-                    //click function to close modal clear the map that was opened
-                    modalCloseBtn.on("click", function (event) {
-                        event.preventDefault();
-                        // mymap.off();
-                        closeModal();
-                    });
+                //click function to close modal clear the map that was opened
+                modalCloseBtn.on("click", function (event) {
+                    event.preventDefault();
+                    // mymap.off();
+                    closeModal();
+                });
 
 
-                    //created a function to open up a modal with a map in it
-                    //running into two errors: need to learn how to clear the map before reloading when clicking another modalBtn and still only pooling one set of longitude and latitude coordinates
-                    //possible need to create a function to pull cooridnates of specific location each time
-                    infoBtn.on("click", function (event) {
-                        event.preventDefault();
-                        console.log(brewLat, brewLon);
-                        //if statement that does not allow the modal to open if cooridnates are null
-                        if ((brewLon !== null) && (brewLat !== null)) {
-                            activateModal();
-                            toMap(brewLat, brewLon);
-                            let marker = L.marker([brewLat, brewLon]).addTo(mymap);
-                            marker.bindPopup(brewName + "<br>" + brewAddress + "<br>" + brewCity + "," + brewState).openPopup();
+                //created a function to open up a modal with a map in it
+                //running into two errors: need to learn how to clear the map before reloading when clicking another modalBtn and still only pooling one set of longitude and latitude coordinates
+                //possible need to create a function to pull cooridnates of specific location each time
+                infoBtn.on("click", function (event) {
+                    event.preventDefault();
+                    console.log(brewLat, brewLon);
+                    //if statement that does not allow the modal to open if cooridnates are null
+                    if ((brewLon !== null) && (brewLat !== null)) {
+                        activateModal();
+                        toMap(brewLat, brewLon);
+                        let marker = L.marker([brewLat, brewLon]).addTo(mymap);
+                        marker.bindPopup(brewName + "<br>" + brewAddress + "<br>" + brewCity + "," + brewState).openPopup();
 
-                        }
-                    })
+                    }
+                })
 
                 // infoBtn.on("click", function (event) {
                 //     event.preventDefault();
