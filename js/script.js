@@ -88,8 +88,7 @@ function toMap(brewLat, brewLon) {
         accessToken: 'your.mapbox.access.token'
         // Marker for the map
     }).addTo(mymap);
-    var marker = L.marker([brewLat, brewLon]).addTo(mymap);
-    marker.bindPopup("<b>Hello World I am right here</b><br>Check out this brewery").openPopup();
+
 };
 
 
@@ -122,15 +121,19 @@ searchBtn.on("click", function (event) {
         url: urlBrew,
         method: "GET"
     }).then(function (responseBrew) {
-        // console.log(responseBrew);
+        console.log(responseBrew);
         for (var i = 0; i < responseBrew.length; i++) {
             //leo adding id, longitude, and latitude
             var brewId = responseBrew[i].id;
             let brewLon = responseBrew[i].longitude;
             let brewLat = responseBrew[i].latitude;
+            let brewStreet = responseBrew[i].street;
+            let brewCity = responseBrew[i].city;
+            let brewState = responseBrew[i].state;
+            let brewZip = responseBrew[i].postal_code;
             // console.log(brewLon, brewLat);
             //andy's dynamic elements
-            var brewName = responseBrew[i].name;
+            let brewName = responseBrew[i].name;
             var brewPhone = responseBrew[i].phone;
             var brewResults = $("#results");
             var columns = $("<div>").addClass("columns");
@@ -193,6 +196,9 @@ searchBtn.on("click", function (event) {
                 if ((brewLon !== null) && (brewLat !== null)) {
                     activateModal();
                     toMap(brewLat, brewLon);
+                    var marker = L.marker([brewLat, brewLon]).addTo(mymap);
+                    marker.bindPopup(brewName + "<br>" + brewStreet + "<br>" + brewCity + "," + brewState + "<br>" + brewZip).openPopup();
+                   
                 }
             })
         }
