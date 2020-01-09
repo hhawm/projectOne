@@ -42,7 +42,8 @@
                     <input id="state" class="input is-danger" type="text" id="searchLocation" placeholder="State">
                 </div>
             </div>
-            <button class="button is-black"><i class="fas fa-search" style="padding-right: 1rem"></i> Search</button>
+            <button id="search-button" class="button is-black"><i class="fas fa-search" style="padding-right: 1rem"></i>
+                Search</button>
             <button id="beer-btn" class="button is-black"><i class="fas fa-search" style="padding-right: 1rem"></i>
                 Beer</button>
         </div>
@@ -53,6 +54,21 @@
         <div id="results" class="columns is-multiline">
         </div>
     </section>
+
+    <div id="info-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Modal title</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <!-- Content ... -->
+            </section>
+            <footer class="modal-card-foot">
+            </footer>
+        </div>
+    </div>
 
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://d3js.org/topojson.v0.min.js"></script>

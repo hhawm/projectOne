@@ -1,80 +1,170 @@
-var searchBtn = $(".button");
+let searchBtn = $("#search-button");
+let infoModal = $("#info-modal");
+
+let states = {
+    'Alabama': 'AL',
+    'Alaska': 'AK',
+    'Arizona': 'AZ',
+    'Arkansas': 'AR',
+    'California': 'CA',
+    'Colorado': 'CO',
+    'Connecticut': 'CT',
+    'Delaware': 'DE',
+    'District of Columbia': 'DC',
+    'Florida': 'FL',
+    'Georgia': 'GA',
+    'Hawaii': 'HI',
+    'Idaho': 'ID',
+    'Illinois': 'IL',
+    'Indiana': 'IN',
+    'Iowa': 'IA',
+    'Kansas': 'KS',
+    'Kentucky': 'KY',
+    'Louisiana': 'LA',
+    'Maine': 'ME',
+    'Maryland': 'MD',
+    'Massachusetts': 'MA',
+    'Michigan': 'MI',
+    'Minnesota': 'MN',
+    'Mississippi': 'MS',
+    'Missouri': 'MO',
+    'Montana': 'MT',
+    'Nebraska': 'NE',
+    'Nevada': 'NV',
+    'New Hampshire': 'NH',
+    'New Jersey': 'NJ',
+    'New Mexico': 'NM',
+    'New York': 'NY',
+    'North Carolina': 'NC',
+    'North Dakota': 'ND',
+    'Ohio': 'OH',
+    'Oklahoma': 'OK',
+    'Oregon': 'OR',
+    'Pennsylvania': 'PA',
+    'Rhode Island': 'RI',
+    'South Carolina': 'SC',
+    'South Dakota': 'SD',
+    'Tennessee': 'TN',
+    'Texas': 'TX',
+    'Utah': 'UT',
+    'Vermont': 'VT',
+    'Virginia': 'VA',
+    'Washington': 'WA',
+    'West Virginia': 'WV',
+    'Wisconsin': 'WI',
+    'Wyoming': 'WY'
+}
 
 searchBtn.on("click", function (event) {
     event.preventDefault();
     $("#results").empty();
-    var city = $("#city").val();
-    var state = $("#state").val();
-    var brewURL = "https://api.openbrewerydb.org/breweries?by_city=" + city + "&by_state=" + state;
 
-    function searchByPhone(searchUrl) {
-        console.log(window.performance);
-        console.log("run");
-        $.ajax({
-            url: searchUrl,
-            headers: {
-                'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
-            },
-            method: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                console.log(data);
-            }
-        });
-    }
-
-    var throttledSearchByPhone = _.throttle(searchByPhone, 300)
+    let city = $("#city").val();
+    let state = $("#state").val();
+    let brewURL = "https://api.openbrewerydb.org/breweries?by_city=" + city + "&by_state=" + state;
 
     $.ajax({
         url: brewURL,
         method: "GET"
     }).then(function (responseBrew) {
         console.log(responseBrew);
-        for (var i = 0; i < responseBrew.length; i++) {
-            var brewName = responseBrew[i].name;
-            var brewWeb = responseBrew[i].website_url;
-            let brewPhone = parseInt(responseBrew[i].phone);
-            console.log(brewPhone);
-            var brewLon = responseBrew[i].longitude;
-            var brewLat = responseBrew[i].latitude;
+        for (let i = 0; i < responseBrew.length; i++) {
+            let brewName = responseBrew[i].name;
+            let brewWeb = responseBrew[i].website_url;
+            let brewPhone = responseBrew[i].phone;
+            let brewAddress = responseBrew[i].street;
+            let brewCity = responseBrew[i].city;
+            let brewState = responseBrew[i].state;
+            let brewLon = responseBrew[i].longitude;
+            let brewLat = responseBrew[i].latitude;
 
-            if ((brewLon !== null) && (brewLat !== null) && (brewPhone !== NaN)) {
-                var brewResults = $("#results");
-                var column = $("<div>").addClass("column is-one-quarter");
-                var card = $("<div>").addClass("card");
-                var cardImage = $("<div>").addClass("card-image");
-                var brewImage = $("<figure>").addClass("image is-4by3");
-                var imageSrc = $("<img>");
-                imageSrc.attr("src", "https://bulma.io/images/placeholders/1280x960.png");
-                var cardContent = $("<div>").addClass("card-content");
-                var media = $("<div>").addClass("media");
-                var mediaContent = $("<div>").addClass("media-content");
-                var title = $("<p>").addClass("title is-4");
+            if ((brewLon !== null) && (brewLat !== null)) {
+                let brewResults = $("#results");
+                let column = $("<div>").addClass("column is-one-third");
+                let card = $("<div>").addClass("card");
+                // let cardImage = $("<div>").addClass("card-image");
+                // let brewImage = $("<figure>").addClass("image is-4by3");
+                // let imageSrc = $("<img>");
+                // imageSrc.attr("src", "https://bulma.io/images/placeholders/1280x960.png");
+                let cardContent = $("<div>").addClass("card-content");
+                let media = $("<div>").addClass("media");
+                let mediaContent = $("<div>").addClass("media-content");
+                let title = $("<p>").addClass("title is-4");
                 title.text(brewName);
-                var subTitle = $("<p>").addClass("subtitle is-6");
+                let subTitle = $("<p>").addClass("subtitle is-6");
                 subTitle.text(brewWeb);
-                var subTitle2 = $("<p>").addClass("subtitle is-6");
+                let subTitle2 = $("<p>").addClass("subtitle is-6");
                 subTitle2.text(brewPhone);
+                let infoBtn = $("<button>").addClass("info-button");
+                infoBtn.text("INFO");
 
                 mediaContent.append(title);
                 mediaContent.append(subTitle);
                 mediaContent.append(subTitle2);
+                mediaContent.append(infoBtn);
                 media.append(mediaContent);
                 cardContent.append(media);
-                brewImage.append(imageSrc);
-                cardImage.append(brewImage);
-                card.append(cardImage);
+                // brewImage.append(imageSrc);
+                // cardImage.append(brewImage);
+                // card.append(cardImage);
                 card.append(cardContent);
                 column.append(card);
                 brewResults.append(column);
 
-                let searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search/phone?phone=+1" + brewPhone;
+                infoBtn.on("click", function (event) {
+                    event.preventDefault();
 
-                throttledSearchByPhone(searchURL);
+                    infoModal.addClass("is-active");
+
+                    let infoName = $("<p>");
+                    infoName.text = brewName;
+
+                    let searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/matches?name=" + brewName + "&address1=" + brewAddress + "&city=" + brewCity + "&state=" + states[brewState] + "&country=US";
+
+                    $.ajax({
+                        url: searchURL,
+                        headers: {
+                            'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
+                        },
+                        method: 'GET',
+                        dataType: 'json',
+                    }).then(function (data) {
+                        console.log(data);
+                        console.log(data.businesses[0].id)
+
+                        let brewID = data.businesses[0].id;
+
+                        let idURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/" + brewID;
+
+                        $.ajax({
+                            url: idURL,
+                            headers: {
+                                'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
+                            },
+                            method: 'GET',
+                            dataType: 'json',
+                        }).then(function (data) {
+                            console.log(data);
+                        })
+                    })
+                });
             }
         }
     });
 });
+
+// $.ajax({
+//     url: searchURL,
+//     headers: {
+//         'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
+//     },
+//     method: 'GET',
+//     dataType: 'json',
+//     success: function (data) {
+//         console.log(data);
+//     }
+// });
+// }
 
 // --------------------------------------------------------------------------------------------------------playing with geolocation and leaflet------------------------------------------------------------------------------
 
