@@ -82,10 +82,6 @@ searchBtn.on("click", function (event) {
                 let brewResults = $("#results");
                 let column = $("<div>").addClass("column is-one-third");
                 let card = $("<div>").addClass("card");
-                // let cardImage = $("<div>").addClass("card-image");
-                // let brewImage = $("<figure>").addClass("image is-4by3");
-                // let imageSrc = $("<img>");
-                // imageSrc.attr("src", "https://bulma.io/images/placeholders/1280x960.png");
                 let cardContent = $("<div>").addClass("card-content");
                 let media = $("<div>").addClass("media");
                 let mediaContent = $("<div>").addClass("media-content");
@@ -104,9 +100,6 @@ searchBtn.on("click", function (event) {
                 mediaContent.append(infoBtn);
                 media.append(mediaContent);
                 cardContent.append(media);
-                // brewImage.append(imageSrc);
-                // cardImage.append(brewImage);
-                // card.append(cardImage);
                 card.append(cardContent);
                 column.append(card);
                 brewResults.append(column);
@@ -168,19 +161,6 @@ searchBtn.on("click", function (event) {
         }
     });
 });
-
-// $.ajax({
-//     url: searchURL,
-//     headers: {
-//         'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
-//     },
-//     method: 'GET',
-//     dataType: 'json',
-//     success: function (data) {
-//         console.log(data);
-//     }
-// });
-// }
 
 // --------------------------------------------------------------------------------------------------------playing with geolocation and leaflet------------------------------------------------------------------------------
 
