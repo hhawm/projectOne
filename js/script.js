@@ -78,7 +78,7 @@ function toMap(brewLat, brewLon) {
 
 //variables for the closing the modal by clicking background and the X close button
 let modalBackground = $(".modal-background");
-let modalCloseBtn = $(".delete");
+let modalCloseBtn = $(".modal-close");
 
 //create a function to activate modal
 function activateModal() {
@@ -183,65 +183,41 @@ searchBtn.on("click", function (event) {
                         activateModal();
                         toMap(brewLat, brewLon);
                         let marker = L.marker([brewLat, brewLon]).addTo(mymap);
-                        marker.bindPopup(brewName + "<br>" + brewAddress + "<br>" + brewCity + "," + brewState).openPopup();
 
+                        let searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/matches?name=" + brewName + "&address1=" + brewAddress + "&city=" + brewCity + "&state=" + states[brewState] + "&country=US";
+
+                        $.ajax({
+                            url: searchURL,
+                            headers: {
+                                'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
+                            },
+                            method: 'GET',
+                            dataType: 'json',
+                        }).then(function (data) {
+
+                            let brewID = data.businesses[0].id;
+
+                            let idURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/" + brewID;
+
+                            $.ajax({
+                                url: idURL,
+                                headers: {
+                                    'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
+                                },
+                                method: 'GET',
+                                dataType: 'json',
+                            }).then(function (data) {
+                                console.log(data.image_url);
+
+                                let brewImage = "<img src=\"" + data.image_url + "\"/>";
+                                let brewRating = data.rating;
+                                let brewReview = data.review_count;
+
+                                marker.bindPopup(brewImage + "<strong>" + brewName + "</strong>" + "<br>" + brewAddress + "<br>" + brewCity + "," + brewState + "<br>" + brewRating + " stars by " + brewReview + " reviewers").openPopup();
+                            })
+                        })
                     }
                 })
-
-                // infoBtn.on("click", function (event) {
-                //     event.preventDefault();
-                //     $(".modal-card-body").empty();
-
-                //     let searchURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/matches?name=" + brewName + "&address1=" + brewAddress + "&city=" + brewCity + "&state=" + states[brewState] + "&country=US";
-
-                //     $.ajax({
-                //         url: searchURL,
-                //         headers: {
-                //             'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
-                //         },
-                //         method: 'GET',
-                //         dataType: 'json',
-                //     }).then(function (data) {
-                //         console.log(data);
-                //         console.log(data.businesses[0].id)
-
-                //         let brewID = data.businesses[0].id;
-
-                //         let idURL = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/" + brewID;
-
-                //         $.ajax({
-                //             url: idURL,
-                //             headers: {
-                //                 'Authorization': 'Bearer Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx',
-                //             },
-                //             method: 'GET',
-                //             dataType: 'json',
-                //         }).then(function (data) {
-                //             console.log(data);
-
-                //             infoModal.addClass("is-active");
-
-                //             let infoName = $("<p>");
-                //             infoName.text(brewName);
-                //             let infoImage = $("<div>");
-                //             let infoSrc = $("<img>");
-                //             infoSrc.attr("src", data.image_url);
-                //             let infoRating = $("<p>");
-                //             infoRating.text(data.rating);
-                //             let infoReviewCount = $("<p>");
-                //             infoReviewCount.text(data.review_count);
-
-                //             let cardBody = $(".modal-card-body");
-
-                //             cardBody.append(infoName);
-                //             cardBody.append(infoImage);
-                //             infoImage.append(infoSrc);
-                //             cardBody.append(infoImage);
-                //             cardBody.append(infoRating);
-                //             cardBody.append(infoReviewCount);
-                //         })
-                //     })
-                // });
             }
         }
     });
