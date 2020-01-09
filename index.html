@@ -44,8 +44,7 @@
                 <label class="label">Location</label>
 
                 <p class="control has-icons-left">
-                    <input class="input is-danger" type="text" id="searchCity"
-                        placeholder="current location by default">
+                    <input class="input is-danger" type="text" id="city" placeholder="current location by default">
                     <span class="icon is-small is-left">
                         <i class="fas fa-map-marker-alt"></i>
                     </span>
@@ -54,7 +53,7 @@
 
             <div class="field">
                 <p class="control">
-                    <select class="input is-danger" id="searchState">
+                    <select class="input is-danger" id="state">
                         <option value="">Select you state</option>
                         <option value="Alabama">AL - Alabama</option>
                         <option value="Alaska">AK - Alaska</option>
@@ -64,7 +63,7 @@
                         <option value="Colorado">CO - Colorado</option>
                         <option value="Connecticut">CT - Connecticut</option>
                         <option value="Delaware">DE - Delaware</option>
-                        <option value="District Of Columbia">DC - District Of Columbia</option>
+                        <option value="District of Columbia">DC - District Of Columbia</option>
                         <option value="Florida">FL - Florida</option>
                         <option value="Georgia">GA - Georgia</option>
                         <option value="Hawaii">HI - Hawaii</option>
@@ -111,32 +110,28 @@
                 </p>
             </div>
 
-            <button class="button is-black"><i class="fas fa-search" style="padding-right: 1rem"></i>
+            <button id="search-btn" class="button is-black"><i class="fas fa-beer" style="padding-right: 1rem"></i>
                 Search</button>
-            <button id="beer-btn" class="button is-black"><i class="fas fa-beer" style="padding-right: 1rem"></i>
-
         </div>
     </section>
 
+    <!-- Results -->
 
+    <section id="results-section" class="section">
+        <div id="results" class="columns is-multiline">
+        </div>
+    </section>
 
     <section class="section">
         <div class="modal">
             <div class="modal-background"></div>
             <div class="modal-content">
-                <div id="mapid" style="height: 300px;"></div>
+                <div id="mapid" style="height: 600px;"></div>
             </div>
             <button class="modal-close is-large" aria-label="close"></button>
         </div>
-
     </section>
 
-
-    <!-- Results -->
-    <section id="results-section" class="section">
-        <div id="results" class="columns is-multiline">
-        </div>
-    </section>
     <!--     
     <div id="info-modal" class="modal">
         <div class="modal-background"></div>
@@ -160,11 +155,6 @@
     <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
     <script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
 
-
-
-
-
-
     <section class="hero is-warning">
         <div class="content has-text-centered is-warning hero-body">
             <p>
@@ -176,8 +166,10 @@
 
 
 
-
-    <script src="js/scriptGetCoord.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="js/script.js"></script>
 
 </body>
 
