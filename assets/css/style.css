@@ -49,7 +49,6 @@ h2 {
   text-align: center;
 }
 
-
 #search-btn.button {
   background-color: #9e270a;
   color: white;
@@ -120,25 +119,13 @@ footer {
   font-weight: bold;
 }
 
-@media only screen and (max-width: 733px) {
-  h1 {
-      font-size: 55px;
-  }
-}
-
-@media only screen and (max-width: 672px) {
+@media only screen and (max-width: 755px) {
   h1 {
       font-size: 50px;
   }
 }
 
-@media only screen and (max-width: 611px) {
-  h1 {
-      font-size: 45px;
-  }
-}
-
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 700px) {
   h1 {
       font-size: 40px;
   }
