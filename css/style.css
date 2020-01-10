@@ -63,6 +63,10 @@ h2 {
   color: black;
 }
 
+#search-btn.button:focus {
+  box-shadow: none;
+}
+
 .card {
   border-radius: 15px;
   margin-left: 5%;
