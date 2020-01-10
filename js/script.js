@@ -1,6 +1,6 @@
 let searchBtn = $("#search-btn");
-let infoModal = $("#info-modal");
 
+// Converts open brewery db states to 2 characters for the yelp search request
 let states = {
     'Alabama': 'AL',
     'Alaska': 'AK',
@@ -53,11 +53,10 @@ let states = {
     'West Virginia': 'WV',
     'Wisconsin': 'WI',
     'Wyoming': 'WY'
-}
-
+};
 
 //create a variable for our map
-let mymap = L.map('mapid')
+let mymap = L.map('mapid');
 
 //create a function to place cooridnates into map
 function toMap(brewLat, brewLon) {
@@ -72,10 +71,6 @@ function toMap(brewLat, brewLon) {
 
 };
 
-
-// //create a function that pulls cooridnates for a specific brewery each time the map button is clicked in the results
-
-
 //variables for the closing the modal by clicking background and the X close button
 let modalBackground = $(".modal-background");
 let modalCloseBtn = $(".modal-close");
@@ -84,27 +79,20 @@ let modalCloseBtn = $(".modal-close");
 function activateModal() {
     $(".modal").toggleClass("is-active");
 };
+
 //create a function to close modal
 function closeModal() {
     $(".modal").removeClass("is-active");
 };
 
-
-//---------------------------------------------------------------------------------------Andy's code for creating cards mixed with my map modal--------------------------------------------------------------------------------------------------------------------------
+// Creates cards for each result and displays them in the results section
 searchBtn.on("click", function (event) {
     event.preventDefault();
     $("#results").empty();
 
-    //     var searchCity = $(".input").val();
-    //     var urlBrew = "https://api.openbrewerydb.org/breweries?by_city=" + searchCity;
-
-
-
-    let city = $("#city").val();
+    let city = $("#city").val().trim();
     let state = $("#state").val();
     let brewURL = "https://api.openbrewerydb.org/breweries?by_city=" + city + "&by_state=" + state;
-
-
 
     $.ajax({
         url: brewURL,
@@ -114,40 +102,27 @@ searchBtn.on("click", function (event) {
 
         for (let i = 0; i < responseBrew.length; i++) {
             let brewName = responseBrew[i].name;
-            let brewWeb = responseBrew[i].website_url;
-            let brewPhone = responseBrew[i].phone;
             let brewAddress = responseBrew[i].street;
             let brewCity = responseBrew[i].city;
             let brewState = responseBrew[i].state;
             let brewLon = responseBrew[i].longitude;
             let brewLat = responseBrew[i].latitude;
 
+            if (city === "" || state === "") {
+                return;
+            }
+
             if ((brewLon !== null) && (brewLat !== null)) {
                 let brewResults = $("#results");
-                let column = $("<div>").addClass("column is-one-third");
+                let column = $("<div>").addClass("column is-half");
                 let card = $("<div>").addClass("card");
                 let cardContent = $("<div>").addClass("card-content");
                 let media = $("<div>").addClass("media");
                 let mediaContent = $("<div>").addClass("media-content");
                 let title = $("<p>").addClass("title is-4");
                 title.text(brewName);
-                let subTitle = $("<p>").addClass("subtitle is-6");
-                subTitle.text(brewWeb);
-                let subTitle2 = $("<p>").addClass("subtitle is-6");
-                subTitle2.text(brewPhone);
-                let infoBtn = $("<button>").addClass("info-button");
-                infoBtn.text("INFO");
-
-                // //create a modal map button
-                // let modalBtn = $("<button>").addClass("button is-black");
-                // modalBtn.text("Map");
-                // mediaContent.append(title);
-                // mediaContent.append(subTitle);
 
                 mediaContent.append(title);
-                mediaContent.append(subTitle);
-                mediaContent.append(subTitle2);
-                mediaContent.append(infoBtn);
                 media.append(mediaContent);
                 cardContent.append(media);
                 card.append(cardContent);
@@ -170,11 +145,8 @@ searchBtn.on("click", function (event) {
                     closeModal();
                 });
 
-
                 //created a function to open up a modal with a map in it
-                //running into two errors: need to learn how to clear the map before reloading when clicking another modalBtn and still only pooling one set of longitude and latitude coordinates
-                //possible need to create a function to pull cooridnates of specific location each time
-                infoBtn.on("click", function (event) {
+                card.on("click", function (event) {
                     event.preventDefault();
                     console.log(brewLat, brewLon);
                     //if statement that does not allow the modal to open if cooridnates are null
@@ -209,10 +181,23 @@ searchBtn.on("click", function (event) {
                                 console.log(data.image_url);
 
                                 let brewImage = "<img src=\"" + data.image_url + "\"/>";
+                                let brewWeb = responseBrew[i].website_url;
+                                let brewPhone = responseBrew[i].phone;
                                 let brewRating = data.rating;
                                 let brewReview = data.review_count;
 
-                                marker.bindPopup(brewImage + "<strong>" + brewName + "</strong>" + "<br>" + brewAddress + "<br>" + brewCity + "," + brewState + "<br>" + brewRating + " stars by " + brewReview + " reviewers").openPopup();
+                                marker.bindPopup(`${brewImage} 
+                                <strong> ${brewName} </strong> 
+                                <br>
+                                 ${brewAddress}
+                                <br> 
+                                ${brewCity}, ${brewState} 
+                                <br> 
+                                <a target="_blank" href= ${brewWeb} > Website </a> 
+                                <br> 
+                                Phone: ${brewPhone} 
+                                <br> 
+                                ${brewRating} stars by ${brewReview} reviews`).openPopup();
                             })
                         })
                     }
@@ -221,9 +206,3 @@ searchBtn.on("click", function (event) {
         }
     });
 });
-
-
-
-
-
-
