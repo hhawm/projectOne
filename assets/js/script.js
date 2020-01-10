@@ -145,6 +145,7 @@ function closeModal() {
 // Creates cards for each result and displays them in the results section
 searchBtn.on("click", function (event) {
     event.preventDefault();
+    $("#errorMsg").empty();
     $("#results").empty();
 
     let city = $("#city").val().trim();
@@ -168,7 +169,7 @@ function makeCards(city, state) {
         console.log(responseBrew);
 
         if (responseBrew.length === 0) {
-            $("#results").text("Sorry, no breweries in " + city + ", " + state + ".");
+            $("#errorMsg").text("Sorry, no breweries in " + city + ", " + state + ".");
         };
 
         for (let i = 0; i < responseBrew.length; i++) {
@@ -186,7 +187,7 @@ function makeCards(city, state) {
 
                 let column = $("<div>").addClass("column is-half");
 
-                let card = $("<div>").addClass("card");
+                let card = $("<div>").addClass("card animated fadeInUp");
                 let cardContent = $("<div>").addClass("card-content");
                 let media = $("<div>").addClass("media");
                 let mediaContent = $("<div>").addClass("media-content");
@@ -265,7 +266,7 @@ function makeCards(city, state) {
                                 <br> 
                                 Phone: ${brewPhone} 
                                 <br> 
-                                ${brewRating} stars by ${brewReview} reviews`).openPopup();
+                                ${brewRating} stars with ${brewReview} reviews`).openPopup();
                             })
                         })
                     }
