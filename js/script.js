@@ -55,8 +55,9 @@ let states = {
     'Wyoming': 'WY'
 }
 
+//--------------------------------------------------------------------------------------------------map with modal commands-------------------------------------------------------------------------------------
 
-//create a variable for our map (cool)
+//create a variable for our map
 let mymap = L.map('mapid')
 
 //create a function to place cooridnates into map
@@ -67,13 +68,33 @@ function toMap(brewLat, brewLon) {
         maxZoom: 18,
         id: 'mapbox/streets-v11',
         accessToken: 'your.mapbox.access.token'
-        // Marker for the map
     }).addTo(mymap);
 
 };
 
+getLocation();
+//function to grab current location
+function getLocation() {
+    // Make sure browser supports this feature
+    if (navigator.geolocation) {
+        // Provide our showPosition() function to getCurrentPosition
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+    else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+// This will get called after getCurrentPosition()
+function showPosition(position) {
+    // Grab coordinates from the given object
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+    console.log("Your coordinates are Latitude: " + lat + " Longitude " + lon);
 
-// //create a function that pulls cooridnates for a specific brewery each time the map button is clicked in the results
+    // call next function to assign parameters in map api
+    // L.marker([lat, lon]).addTo(mymap);
+}
+
 
 
 //variables for the closing the modal by clicking background and the X close button
@@ -82,7 +103,7 @@ let modalCloseBtn = $(".modal-close");
 
 //create a function to activate modal
 function activateModal() {
-    $(".modal").toggleClass("is-active");
+    $(".modal").addClass("is-active animated zoomIn");
 };
 //create a function to close modal
 function closeModal() {
@@ -90,21 +111,18 @@ function closeModal() {
 };
 
 
+
+
+
 //---------------------------------------------------------------------------------------Andy's code for creating cards mixed with my map modal--------------------------------------------------------------------------------------------------------------------------
 searchBtn.on("click", function (event) {
     event.preventDefault();
     $("#results").empty();
-
-    //     var searchCity = $(".input").val();
-    //     var urlBrew = "https://api.openbrewerydb.org/breweries?by_city=" + searchCity;
-
-
-
     let city = $("#city").val();
     let state = $("#state").val();
+
+    //-----------------------------------------------------------------------API for yip-------------------------------------------------------------
     let brewURL = "https://api.openbrewerydb.org/breweries?by_city=" + city + "&by_state=" + state;
-
-
 
     $.ajax({
         url: brewURL,
@@ -122,9 +140,13 @@ searchBtn.on("click", function (event) {
             let brewLon = responseBrew[i].longitude;
             let brewLat = responseBrew[i].latitude;
 
+
+            
             if ((brewLon !== null) && (brewLat !== null)) {
+
+                //Create results dynamically
                 let brewResults = $("#results");
-                let column = $("<div>").addClass("column is-one-third");
+                let column = $("<div>").addClass("column is-one-third animated slideInUp");
                 let card = $("<div>").addClass("card");
                 let cardContent = $("<div>").addClass("card-content");
                 let media = $("<div>").addClass("media");
@@ -138,12 +160,11 @@ searchBtn.on("click", function (event) {
                 let infoBtn = $("<button>").addClass("info-button");
                 infoBtn.text("INFO");
 
-                // //create a modal map button
-                // let modalBtn = $("<button>").addClass("button is-black");
-                // modalBtn.text("Map");
-                // mediaContent.append(title);
-                // mediaContent.append(subTitle);
 
+
+
+
+                //Appending items to resutls
                 mediaContent.append(title);
                 mediaContent.append(subTitle);
                 mediaContent.append(subTitle2);
@@ -154,29 +175,23 @@ searchBtn.on("click", function (event) {
                 column.append(card);
                 brewResults.append(column);
 
-                //Modal map button creating
+
                 //click function to close modal clear the map that was opened
                 modalBackground.on("click", function (event) {
                     event.preventDefault();
-                    // mymap.off();
-                    // mymap.remove();
                     closeModal();
                 });
 
                 //click function to close modal clear the map that was opened
                 modalCloseBtn.on("click", function (event) {
                     event.preventDefault();
-                    // mymap.off();
                     closeModal();
                 });
 
 
-                //created a function to open up a modal with a map in it
-                //running into two errors: need to learn how to clear the map before reloading when clicking another modalBtn and still only pooling one set of longitude and latitude coordinates
-                //possible need to create a function to pull cooridnates of specific location each time
+                //create a click event that dynamic creates map and marker
                 infoBtn.on("click", function (event) {
                     event.preventDefault();
-                    console.log(brewLat, brewLon);
                     //if statement that does not allow the modal to open if cooridnates are null
                     if ((brewLon !== null) && (brewLat !== null)) {
                         activateModal();
@@ -208,11 +223,11 @@ searchBtn.on("click", function (event) {
                             }).then(function (data) {
                                 console.log(data.image_url);
 
-                                let brewImage = "<img src=\"" + data.image_url + "\"/>";
+                                let brewImage = "<img src=\"" + data.image_url + "\"/ style=\"width: 100%;\">";
                                 let brewRating = data.rating;
                                 let brewReview = data.review_count;
 
-                                marker.bindPopup(brewImage + "<strong>" + brewName + "</strong>" + "<br>" + brewAddress + "<br>" + brewCity + "," + brewState + "<br>" + brewRating + " stars by " + brewReview + " reviewers").openPopup();
+                                marker.bindPopup(brewImage + "<br>" + "<strong>" + brewName + "</strong>" + "<br>" + brewAddress + "<br>" + brewCity + "," + brewState + "<br>" + brewRating + " stars by " + brewReview + " reviewers").openPopup();
                             })
                         })
                     }

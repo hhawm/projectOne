@@ -9,23 +9,31 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
-    <!-- Map css and script -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+
+    <!-- leafet css and script -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-        crossorigin=""></script>
-    <!-- Mapquest scripts-->
-    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css" />
+        crossorigin=""></script> -->
 
+    <!-- Mapquest scripts-->
+    <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=cRaBdQ9RUn3PkgcRWcT4gdj6CxzDt1rW"></script>
+    <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-routing.js?key=cRaBdQ9RUn3PkgcRWcT4gdj6CxzDt1rW"></script>
+    <!-- <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css" /> -->
+    
+    <!-- animated css and script -->
+    <link rel="stylesheet" href="./css/vender-css/animate.css">
     <link rel="stylesheet" href="css/style.css" />
     <title>Brew Near You VERSION1.1</title>
 </head>
 
 
-<body>
+<body class="animated fadeIn">
     <section class="hero is-warning">
         <div class="hero-body">
             <div class="container">
@@ -112,6 +120,12 @@
 
             <button id="search-btn" class="button is-black"><i class="fas fa-beer" style="padding-right: 1rem"></i>
                 Search</button>
+
+            <div id="recent-search-results" class="columns">
+
+                <!-- recent search result button -->
+
+            </div>
         </div>
     </section>
 
@@ -132,30 +146,13 @@
         </div>
     </section>
 
-        
-    <!-- <div id="info-modal" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Modal title</p>
-                <button class="delete" aria-label="close"></button>
-            </header>
-            <section class="modal-card-body">
-                Content ...
-            </section>
-            <footer class="modal-card-foot">
-            </footer>
-        </div>
-    </div> -->
-
-
 
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://d3js.org/topojson.v0.min.js"></script>
     <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
     <script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
 
-    <section class="hero is-warning">
+    <section class="hero is-warning bounce">
         <div class="content has-text-centered is-warning hero-body">
             <p>
                 <strong>Please drink responsibly.</strong>
