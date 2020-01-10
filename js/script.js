@@ -53,7 +53,9 @@ let states = {
     'West Virginia': 'WV',
     'Wisconsin': 'WI',
     'Wyoming': 'WY'
+
 };
+
 
 //create a variable for our map
 let mymap = L.map('mapid');
@@ -66,10 +68,10 @@ function toMap(brewLat, brewLon) {
         maxZoom: 18,
         id: 'mapbox/streets-v11',
         accessToken: 'your.mapbox.access.token'
-        // Marker for the map
     }).addTo(mymap);
 
 };
+
 
 //variables for the closing the modal by clicking background and the X close button
 let modalBackground = $(".modal-background");
@@ -77,13 +79,14 @@ let modalCloseBtn = $(".modal-close");
 
 //create a function to activate modal
 function activateModal() {
-    $(".modal").toggleClass("is-active");
+    $(".modal").addClass("is-active animated zoomIn");
 };
 
 //create a function to close modal
 function closeModal() {
     $(".modal").removeClass("is-active");
 };
+
 
 // Creates cards for each result and displays them in the results section
 searchBtn.on("click", function (event) {
@@ -108,13 +111,17 @@ searchBtn.on("click", function (event) {
             let brewLon = responseBrew[i].longitude;
             let brewLat = responseBrew[i].latitude;
 
+
             if (city === "" || state === "") {
                 return;
             }
-
             if ((brewLon !== null) && (brewLat !== null)) {
+
+                //Create results dynamically
                 let brewResults = $("#results");
+
                 let column = $("<div>").addClass("column is-half");
+
                 let card = $("<div>").addClass("card");
                 let cardContent = $("<div>").addClass("card-content");
                 let media = $("<div>").addClass("media");
@@ -122,6 +129,10 @@ searchBtn.on("click", function (event) {
                 let title = $("<p>").addClass("title is-4");
                 title.text(brewName);
 
+
+
+
+                //Appending items to resutls
                 mediaContent.append(title);
                 media.append(mediaContent);
                 cardContent.append(media);
@@ -129,26 +140,27 @@ searchBtn.on("click", function (event) {
                 column.append(card);
                 brewResults.append(column);
 
-                //Modal map button creating
+
                 //click function to close modal clear the map that was opened
                 modalBackground.on("click", function (event) {
                     event.preventDefault();
-                    // mymap.off();
-                    // mymap.remove();
                     closeModal();
                 });
 
                 //click function to close modal clear the map that was opened
                 modalCloseBtn.on("click", function (event) {
                     event.preventDefault();
-                    // mymap.off();
                     closeModal();
                 });
 
+
+                //create a click event that dynamic creates map and marker
+                infoBtn.on("click", function (event) {
+
                 //created a function to open up a modal with a map in it
                 card.on("click", function (event) {
+
                     event.preventDefault();
-                    console.log(brewLat, brewLon);
                     //if statement that does not allow the modal to open if cooridnates are null
                     if ((brewLon !== null) && (brewLat !== null)) {
                         activateModal();
@@ -179,6 +191,7 @@ searchBtn.on("click", function (event) {
                                 dataType: 'json',
                             }).then(function (data) {
                                 console.log(data.image_url);
+
 
                                 let brewImage = "<img src=\"" + data.image_url + "\"/>";
                                 let brewWeb = responseBrew[i].website_url;
