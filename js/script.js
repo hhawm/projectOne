@@ -55,6 +55,60 @@ let states = {
     'Wyoming': 'WY'
 }
 
+let stateTwo = {
+    'AZ': 'Arizona',
+    'AL': 'Alabama',
+    'AK': 'Alaska',
+    'AR': 'Arkansas',
+    'CA': 'California',
+    'CO': 'Colorado',
+    'CT': 'Connecticut',
+    'DC': 'District of Columbia',
+    'DE': 'Delaware',
+    'FL': 'Florida',
+    'GA': 'Georgia',
+    'HI': 'Hawaii',
+    'ID': 'Idaho',
+    'IL': 'Illinois',
+    'IN': 'Indiana',
+    'IA': 'Iowa',
+    'KS': 'Kansas',
+    'KY': 'Kentucky',
+    'LA': 'Louisiana',
+    'ME': 'Maine',
+    'MD': 'Maryland',
+    'MA': 'Massachusetts',
+    'MI': 'Michigan',
+    'MN': 'Minnesota',
+    'MS': 'Mississippi',
+    'MO': 'Missouri',
+    'MT': 'Montana',
+    'NE': 'Nebraska',
+    'NV': 'Nevada',
+    'NH': 'New Hampshire',
+    'NJ': 'New Jersey',
+    'NM': 'New Mexico',
+    'NY': 'New York',
+    'NC': 'North Carolina',
+    'ND': 'North Dakota',
+    'OH': 'Ohio',
+    'OK': 'Oklahoma',
+    'OR': 'Oregon',
+    'PA': 'Pennsylvania',
+    'RI': 'Rhode Island',
+    'SC': 'South Carolina',
+    'SD': 'South Dakota',
+    'TN': 'Tennessee',
+    'TX': 'Texas',
+    'UT': 'Utah',
+    'VT': 'Vermont',
+    'VA': 'Virginia',
+    'WA': 'Washington',
+    'WV': 'West Virginia',
+    'WI': 'Wisconsin',
+    'WY': 'Wyoming'
+}
+
 
 //create a variable for our map
 let mymap = L.map('mapid')
@@ -102,6 +156,16 @@ searchBtn.on("click", function (event) {
 
     let city = $("#city").val();
     let state = $("#state").val();
+
+    if (city === "" && state === "") {
+        getLocation();
+    } else {
+        makeCards(city, state);
+    }
+});
+
+function makeCards(city, state) {
+
     let brewURL = "https://api.openbrewerydb.org/breweries?by_city=" + city + "&by_state=" + state;
 
 
@@ -111,6 +175,10 @@ searchBtn.on("click", function (event) {
         method: "GET"
     }).then(function (responseBrew) {
         console.log(responseBrew);
+
+        if (responseBrew.length === 0) {
+            $("#results").text("Sorry, no breweries in " + city + ", " + state + ".");
+        };
 
         for (let i = 0; i < responseBrew.length; i++) {
             let brewName = responseBrew[i].name;
@@ -214,14 +282,56 @@ searchBtn.on("click", function (event) {
                                 let brewReview = data.review_count;
 
                                 marker.bindPopup(brewImage + "<strong>" + brewName + "</strong>" + "<br>" + brewAddress + "<br>" + brewCity + "," + brewState + "<br>" + brewRating + " stars by " + brewReview + " reviewers").openPopup();
-                            })
-                        })
-                    }
-                })
-            }
-        }
+                            });
+                        });
+                    };
+                });
+            };
+        };
     });
-});
+};
+
+
+function getLocation() {
+    // Make sure browser supports this feature
+    if (navigator.geolocation) {
+        // Provide our showPosition() function to getCurrentPosition
+        navigator.geolocation.getCurrentPosition(showPosition1);
+    }
+    else {
+        return;
+        // alert("Geolocation is not supported by this browser.");
+    }
+}
+
+function showPosition1(position) {
+    // Grab coordinates from the given object
+    let lat = position.coords.latitude;
+    let lon = position.coords.longitude;
+    console.log("Your coordinates are Latitude: " + lat + " Longitude " + lon);
+    let mqKey = "cRaBdQ9RUn3PkgcRWcT4gdj6CxzDt1rW";
+    let queryURL = "http://www.mapquestapi.com/geocoding/v1/reverse?key=" + mqKey + "&location=" + lat + "," + lon;
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (reversedLoc) {
+        let cityRev = reversedLoc.results[0].locations[0].adminArea5;
+        let stateRev = reversedLoc.results[0].locations[0].adminArea3;
+        console.log(cityRev);
+        console.log(stateRev);
+        console.log(stateTwo[stateRev]);
+        makeCards(cityRev, stateTwo[stateRev]);
+
+    });
+
+}
+
+
+
+
+
+
 
 
 
