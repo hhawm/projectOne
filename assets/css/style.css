@@ -20,7 +20,7 @@ h1 {
 }
 
 h2 {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Roboto', sans-serif;
   text-align: center;
   margin: 25px;
   line-height: 1.5;
@@ -28,19 +28,19 @@ h2 {
 
 .level:not(:last-child) {
   margin-bottom: 0px;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: bolder;
 }
 
 #city.input.is-danger {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Roboto', sans-serif;
   border-color: #9e270a;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
 #state.input.is-danger {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Roboto', sans-serif;
   border-color: #9e270a;
   border-radius: 0;
 }
@@ -53,7 +53,7 @@ h2 {
   background-color: #9e270a;
   color: white;
   border-color: #9e270a;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: bold;
   letter-spacing: .5px;
   border-top-left-radius: 0;
@@ -93,7 +93,7 @@ h2 {
 
 .media-content {
   text-align: center;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .title.is-4 {
@@ -115,7 +115,7 @@ footer {
   color: white;
   text-align: center;
   padding-top: 40px;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: bold;
 }
 

@@ -1,10 +1,7 @@
-# projectOne
-Title: Brew Me, Brew Winch, Discover Breweries, Brews Around Me, 
+# Brew Near You
+This application is intended to allow users to search by city and/or state for breweries and bars that serve beer in that location. All search results are generated on the landing page and are displayed with the appropriate brewery name. Upon clicking a result, the user is given the brewery's location along with additional information provided by Open Brewery DB and Yelp.
 
-## description
-Create an application that presents users with breweries and bars that serve beer around their area. We will provide a default search of current location, and filter option by state, city, and zip code. Results are ordered by closest location and displayed by brewery name and location. After clicking result a modal displays Brewery reviews, website url, address, phone number, hours of operation, small picture of brewery, and location on a map. 
-
-## user story
+# User story
 Story #1
 
 AS a beer enthusiast
@@ -21,43 +18,35 @@ I want to find a local brewery
 
 So that I can try local beers
 
-## wireframe
-![alt text](landing-page.png "Logo Title Text 1")
+# Getting Started
 
-![alt text](results.png "Logo Title Text 1")
+1. Type in a city and/or select a state
+2. Leave both city and state fields empty to use current location
+3. Click the SEARCH button to generate a list of breweries in the desired area 
+4. Click on a result for more information
+5. A modal appears displaying the following information: brewery name, image, address, website, phone number, yelp rating, number of reviews, and location on map
+6. Click the black background or the X in the upper-right corner to close the modal
 
-![alt text](modal.png "Logo Title Text 1")
+# Link
 
-## api keys to be used
- #for maps -- https://leafletjs.com/
- 
-#<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-   crossorigin=""/>
-  
- #<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-   crossorigin=""></script>  
+https://hhawm.github.io/projectOne/
 
-#Brewery Data Base -- https://www.openbrewerydb.org/
-#Openbrewery GET URL (no api key needed): https://api.openbrewerydb.org/breweries
+![alt text](assets/images/landing_page.png "Logo Title Text 1")
 
-#Yelp Database -- https://www.yelp.com/developers/documentation/v3
-#Yelp GET URL: https://api.yelp.com/v3/businesses/search
-#Yelp API Key:Tj1ORfVUyCEhKkIIHsCm6CLztz_Z7fMnITBAKUNYLVZivHuV-4wQ41Me9lSI9eyhAbwSIuMqerfrTWaB7FY4TQIYy1zs_1i8l1ueMUrirIccE_ZWosspqnwoGp8TXnYx
+![alt text](assets/images/results.png "Logo Title Text 1")
 
-## rough breakdown of tasks
-Create a landing page with a heading 1, 2 and form submission box with button for searching breweries
+![alt text](assets/images/map.png "Logo Title Text 1")
 
-Create a results div element that is hidden until it is populated with results
+# Built With
 
-Create  a modal that appears when a result is clicked. Modal has brewery information, reviews, and map location
+Bulma - https://bulma.io/
 
-Set up an ajax GET to get information about breweries from OpenBreweryDB
-	Be able to display brewery url, address, and phone number.
+jQuery - https://jquery.com/
 
-Set up an ajax GET to get review information and picture from Yelp fusion API
-	Be able to display a reviews of brewery, possibly image of brewery, and hours of operation
+Open Brewery DB - https://www.openbrewerydb.org/
 
-Set up an ajax GET to show map location from leaflet API
-Make address from OpenBreweryDB link to leaflet to display brewery location on a map
+Yelp Fusion - https://www.yelp.com/fusion
+
+Leaflet - https://leafletjs.com/
+
+Mapquest - https://developer.mapquest.com/
