@@ -295,7 +295,7 @@ function showPosition1(position) {
     let lon = position.coords.longitude;
     console.log("Your coordinates are Latitude: " + lat + " Longitude " + lon);
     let mqKey = "cRaBdQ9RUn3PkgcRWcT4gdj6CxzDt1rW";
-    let queryURL = "http://www.mapquestapi.com/geocoding/v1/reverse?key=" + mqKey + "&location=" + lat + "," + lon;
+    let queryURL = "https://www.mapquestapi.com/geocoding/v1/reverse?key=" + mqKey + "&location=" + lat + "," + lon;
 
     $.ajax({
         url: queryURL,
